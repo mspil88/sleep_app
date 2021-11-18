@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">How did you feel the next day?</h1></div>
+                <div class="column"><input id="mood-entry" type="text" placeholder="Add a mood"> </div>
+                <div class="column" id="mood-container">
+
+                    <div class="hold-btns" id="hold-btns">
+<!--                    <button class="mood-btn" id="tired-btn" name="tired">Tired</button>-->
+<!--                    <button class="mood-btn" id="frustrated-btn" name="frustrated">Frustrated</button>-->
+<!--                    <button class="mood-btn" id="irritable-btn" name="irritable">Irritable</button>-->
+<!--                    <button class="mood-btn" id="refreshed-btn" name="refreshed">Refreshed</button>-->
+<!--                    <button class="mood-btn" id="alert-btn" name="alert">Alert</button>-->
+<!--                    <button class="mood-btn" id="groggy-btn" name="groggy">Groggy</button>-->
+<!--                    <button class="mood-btn" id="add-btn">+Add</button>-->
+                        {% for mood in moods %}
+                        <button class="mood-btn" id = "{{mood}}-btn" name = {{mood}}>{{mood}}</button>
+                        {% endfor %}
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div class="next-back-container" id="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next5-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='feel.js')}}"></script>
+
+{% endblock %}

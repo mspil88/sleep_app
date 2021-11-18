@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="login-container">
+            <h1 class="login-title">Create Account </h1>
+             <form action="/register" method="post">
+                    <input autocomplete="off" id="username" autofocus class="form-control" name="username" placeholder="Username" type="text">
+                    <input autocomplete="off" id="password" autofocus class="form-control" name="password" placeholder="Password" type="password">
+                    <input autocomplete="off" id="confirm" autofocus class="form-control" name="confirm" placeholder="Confirmation" type="password">
+                    <button class="login-btn" id="login-btn" type="submit">Register</button>
+                    <br><br>
+
+                    {% with messages = get_flashed_messages() %}
+                        {%if messages %}
+                            {% for message in messages %}
+                                <span id="login-error">{{message}}</span>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+            </form>
+        </div>
+
+    <script src="static/js/login.js"></script>
+    </body>
+
+
+
+
+</html>

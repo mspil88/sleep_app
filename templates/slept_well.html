@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">Did you sleep well last night?</h1></div>
+                <div class="column"><img class="sleep-image-well" src="static/cat_in_bed.png"></div>
+                <div class="column-bt" id="slept-well-btns">
+                    <button class="login-btn" id="yes" type="submit">Yes</button>
+                    <button class="login-btn" id="somewhat" type="submit">Somewhat</button>
+                    <button class="login-btn" id="no" type="submit">No</button>
+                </div>
+                <div class="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next4-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='slept_well.js')}}"></script>
+
+{% endblock %}

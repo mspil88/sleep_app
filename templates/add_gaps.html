@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">How long were these gaps?</h1></div>
+<!--                <div class="column"><img class="sleep-image-well" src="static/cat_in_bed.png"></div>-->
+                <div class="column" id="my-gaps-container">
+                    {% for gap in range(gaps) %}
+                    <h1 id="gap-{{gap}}-title" class="p-fall-asleep" >Gap: {{gap+1}}</h1>
+                    <select name="gap-{{gap}}" class="gap_length" id="gap-{{gap}}-select">
+                        <option selected disabled>Length of time of gap {{gap+1}}</option>
+                        <option value="Less than 15 minutes">Less than 15 minutes</option>
+                        <option value="About 15 minutes">About 15 minutes</option>
+                        <option value="30 minutes">30 minutes</option>
+                        <option value="45 minutes">45 minutes</option>
+                        <option value="1 hour">1 hour</option>
+                        <option value="2 hours">2 hours</option>
+                        <option value="More than 2 hours">More than 2 hours</option>
+                    </select>
+                    {% endfor %}
+
+                </div>
+
+                <div class="next-back-container" id="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next6-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='add_gaps.js')}}"></script>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div id="input-background"></div>
+    <div class="gap-input-container" id="gap-input-add">
+        <div class="gap-inputs" id="add-gap-inputs">
+            <p>Gap Length</p>
+            <select name="gap-{{gap}}" class="gap_length" id="gap-select">
+                        <option selected disabled>Length of time of gap</option>
+                        <option value="Less than 15 minutes">Less than 15 minutes</option>
+                        <option value="About 15 minutes">About 15 minutes</option>
+                        <option value="30 minutes">30 minutes</option>
+                        <option value="45 minutes">45 minutes</option>
+                        <option value="1 hour">1 hour</option>
+                        <option value="2 hours">2 hours</option>
+                        <option value="More than 2 hours">More than 2 hours</option>
+                    </select>
+            <p>Which interventions did you try?</p>
+            <label for="checkbox-bed" class="checkbox-container">Got out of bed</label>
+            <input type="checkbox" id="checkbox-bed" name="out-bed" value="out of bed">
+            <span class="checkmark"></span>
+            </label>
+            <label for="checkbox-sub"  class="checkbox-container">Thought substitution</label>
+            <input type="checkbox" id="checkbox-sub" name="thought-sub" value="thought sub">
+            <span class="checkmark"></span>
+            </label>
+            <label for="checkbox-count" class="checkbox-container">Counting method</label>
+            <input type="checkbox" id="checkbox-count" name="count-method" value="count method">
+            <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="gap-input-actions">
+            <button id="input-cancel">Cancel</button>
+            <button id="input-add">Add</button>
+        </div>
+    </div>
+    <div class="sleep-container"><h1 class="sleep-title">What happened during these gaps?</h1>
+        <div class="column" id="my-gaps-container">
+            {% for gap in range(gaps) %}
+                <div id="indiv-gap-container">
+                <h1 id="gap-num"> Gap: {{gap+1}}</h1>
+                <button id="gap-{{gap+1}}">Add</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="next-back-container" id="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next6-btn" type="submit">Next</button>
+                </div>
+    </div>
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='add_gaps_2.js')}}"></script>
+
+
+{% endblock %}

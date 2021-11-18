@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">How long did it take you to...</h1></div>
+                <div class="column"><img class="sleep-image-time" src="static/awake_cat_fin.png"></div>
+                <div class="column-bt">
+                    <p class="p-fall-asleep">Fall Asleep</p>
+                    <select name="fall asleep" class="times-to-fall" id="times-to-fall">
+                        <option selected disabled>Time to fall asleep</option>
+                        <option value="Less than 15 minutes">Less than 15 minutes</option>
+                        <option value="About 15 minutes">About 15 minutes</option>
+                        <option value="30 minutes">30 minutes</option>
+                        <option value="45 minutes">45 minutes</option>
+                        <option value="1 hour">1 hour</option>
+                        <option value="2 hours">2 hours</option>
+                        <option value="More than 2 hours">More than 2 hours</option>
+                    </select>
+                </div>
+
+                <div class="column-ot">
+                    <p class="p-out-of">Get out of bed</p>
+                    <select name="out of bed" class="get-out-bed" id="get-out-bed">
+                        <option selected disabled>Time to get out of bed</option>
+                        <option value="Less than 15 minutes">Less than 15 minutes</option>
+                        <option value="About 15 minutes">About 15 minutes</option>
+                        <option value="30 minutes">30 minutes</option>
+                        <option value="45 minutes">45 minutes</option>
+                        <option value="1 hour">1 hour</option>
+                        <option value="2 hours">2 hours</option>
+                        <option value="More than 2 hours">More than 2 hours</option>
+                    </select>
+                </div>
+
+                <div class="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next2-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='time_taken.js')}}"></script>
+
+{% endblock %}

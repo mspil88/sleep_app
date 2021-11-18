@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="static/styles.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>
+        <script defer src="script.js"></script>
+        <script src="https://cdn.plot.ly/plotly-2.3.1.min.js"></script>
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+    </head>
+    <body>
+        <section class="navigation">
+            <nav>
+<!--                <div><img class="sleep-logo" src="static/sleeping_cat.png" alt="sleeping-cat"></div>-->
+                <ul>
+                    <li><a href="/">Sleep</a></li>
+                    <li><a href="#">Mood</a></li>
+                    <li><a href="/diary2">Diary</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                </ul>
+
+                <ul>
+                    <li class = "nav-log-out"><a href="#">Log Out</a></li>
+                </ul>
+            </nav>
+        </section>
+
+            <main id="swup" class="transition-fade">
+            {% block main %}{% endblock %}
+        </main>
+
+    </body>
+
+</html>

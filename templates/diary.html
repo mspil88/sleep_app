@@ -1,0 +1,348 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+            <div class="summary-container">
+            <div class="sef" id="lastweek-sef">
+                <div id="lastweek-title">Last Weeks Efficiency
+                    <div id ="lastweek-sef-cont">
+                        <span id="lastweek-sef-span"> {{sef_last}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sef" id="thisweek-sef">
+                <div id="thisweek-title">This Weeks Efficiency
+                    <div id ="thisweek-sef-cont">
+                        <span id="thisweek-sef-span"> {{sef_this}}
+                            <script>
+                                const lastWeekSpan = document.getElementById("lastweek-sef-span");
+                                const thisWeekSpan = document.getElementById("thisweek-sef-span");
+
+                                const lwValue = parseFloat(lastWeekSpan.innerHTML);
+                                const twValue = parseFloat(thisWeekSpan.innerHTML);
+
+                                twValue > lwValue ? thisWeekSpan.style.color = "green" : (twValue < lwValue ? thisWeekSpan.style.color = "red" : "orange");
+
+
+
+
+
+
+                            </script>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <div class = "table-container">
+        <div class="hold-all">
+            <div class="toggle-container" id="toggle-container">
+                <button id="last-week-btn">Last Week</button>
+                <p class="week-commencing" id="week-commencing-date">week</p>
+                <button id="next-week-btn">Next Week</button>
+            </div>
+            <div class="hold-table">
+            <table class="diary-table">
+            </table>
+            </div>
+        </div>
+        <script>
+            let sleepData = JSON.parse('{{ sleep_data | tojson | safe}}');
+            let wc = JSON.parse('{{ wc | tojson | safe}}');
+            let toggleContainer = document.getElementById("toggle-container");
+            let weekCommencingDate = document.getElementById("week-commencing-date");
+            let defaultWC = wc[wc.length-1];
+            let trackWC = wc.indexOf(defaultWC);
+
+
+            sleepData.forEach((item) => {
+                if(item.how_slept == "yes") {
+                    item.how_slept = "😊";
+                } else if(item.how_slept == "somewhat") {
+                    item.how_slept = "😑";
+                } else if(item.how_slept == "no") {
+                    item.how_slept = "🙁";
+                }
+
+            });
+
+            console.log(`SLEEP DATA ${sleepData}`);
+
+
+
+
+            weekCommencingDate.innerHTML = "WC: "+defaultWC;
+
+            function traverseWeeks(wc, direction="backwards") {
+                const top = wc.length-1;
+
+                if((direction === "backwards") && (trackWC > 0)) {
+                    trackWC --;
+                } else if ((direction === "forwards") && (trackWC < top)) {
+                    trackWC ++ ;
+                }
+            }
+
+
+            console.log(sleepData);
+            console.log(wc);
+
+            // need to treat WC like a DLL where we can go back and forth, we can shift and get indices, terminate if index < 0 or greater than arr.length
+
+            function createTableHeader(tbl, data) {
+                let thead = tbl.createTHead();
+                let row = thead.insertRow();
+                for(let key of data) {
+                    let th = document.createElement("th");
+                    let text = document.createTextNode(key);
+                    th.appendChild(text);
+                    row.appendChild(th);
+                    }
+                }
+            function generateTable(tbl, data) {
+                for(let elem of data) {
+                    let row = tbl.insertRow();
+                    for(key in elem) {
+                        if(key === "wc") {
+                            continue; }
+                        else {
+                            let cell = row.insertCell();
+                            let text = document.createTextNode(elem[key]);
+                            cell.appendChild(text);}
+                    }
+                }
+            }
+
+            function filterSleepData(sleepData, wc) {
+                let filteredSleepData = [];
+                for(let i of sleepData) {
+                    if(i.wc === wc) {
+                        filteredSleepData.push(i);
+                    }
+                }
+
+                return filteredSleepData;
+            }
+
+            let table = document.querySelector("table");
+            let data = ['Day', 'Hours Asleep', 'How I Slept', 'In Bed', 'Out of Bed', 'Sleep Efficiency']
+            console.log(data);
+
+            generateTable(table, filterSleepData(sleepData, defaultWC));
+            createTableHeader(table, data);
+
+            function removeChildNodes(elem) {
+                if(elem.hasChildNodes()) {
+                    while(elem.firstChild) {
+                        elem.removeChild(elem.firstChild);
+                    }
+                }
+            }
+
+            let children = table.children;
+            console.log("Children");
+            console.log(children);
+
+            //take weight out of this
+            toggleContainer.addEventListener("click", (event) => {
+                let action = event.target;
+                if(action.id === "last-week-btn") {
+                    console.log("clicked last week btn");
+                    traverseWeeks(wc);
+
+
+                    let newWC = wc[trackWC];
+                    let filt = filterSleepData(sleepData, newWC);
+                    removeChildNodes(table);
+
+                    //let data = Object.keys(sleepData[0]);
+
+
+                    console.log(children);
+
+                    createTableHeader(table, data);
+
+                    generateTable(table, filt);
+                    weekCommencingDate.innerHTML = "WC: "+ newWC;
+                } else if(action.id ==="next-week-btn") {
+                    console.log("clicked next week btn");
+                    traverseWeeks(wc, direction="forwards");
+                    let newWC = wc[trackWC];
+                    let filt = filterSleepData(sleepData, newWC);
+                    removeChildNodes(table);
+
+                    //let data = Object.keys(sleepData[0]);
+                    createTableHeader(table, data);
+                    generateTable(table, filt);
+                    weekCommencingDate.innerHTML = "WC: "+ newWC;
+
+                }
+
+            }
+            )
+
+
+        </script>
+        </div>
+        <div id="charts-container">
+            <div id="efficiency-container">
+                <script>
+                    let efficiencyData = JSON.parse('{{ efficiency_data | tojson | safe}}');
+                    const efficiencyChart = document.getElementById("efficiency-container");
+                    const efficiencyColor = 'rgb(218,165,32)';
+                    const layout = {
+                        width: 550,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        title: {
+                            text: 'Sleep Efficiency Over Time',
+                            font: {
+                                color: '#FFFFFF'
+                            }
+                            },
+                        legend: {"orientation": "h",
+
+                                font: {color: "#FFFFFF"}},
+
+                        yaxis: {color: '#FFFFFF',
+                                gridcolor: "rgba(255, 255, 255, 0.3)"},
+                        xaxis: {
+                            color: '#FFFFFF',
+                            gridcolor: "rgba(255, 255, 255, 0.3)",
+                            autorange: true,
+                            rangeselector: {buttons: [
+                                   {count: 1,
+                                    label: '1m',
+                                    step: 'month',
+                                    stepmode: 'backward'
+                                   },
+                                {step: 'all'}
+                                ]}
+                            }
+                        };
+
+                    function createPlotlyTrace(x, y, color, name) {
+                        return {
+                            x: x,
+                            y: y,
+                            mode: 'bar',
+                            name: name,
+                            line: {shape: 'spline',
+                                   color: color},
+                            type: 'scatter'
+                        }
+                    };
+                    let xaxis = [];
+                    let yaxis = [];
+
+                    function getAxes(data) {
+                        for(let i of data) {
+                            xaxis.push(i.created_date)
+                            yaxis.push(i.sleep_efficiency);
+                        }
+                    };
+
+                    let target = 70;
+                    let targetYaxis = [];
+
+
+
+                    getAxes(efficiencyData);
+
+                    for(let i = 0; i < xaxis.length; i++) {
+                        targetYaxis.push(target);
+                    }
+
+                    console.log(targetYaxis);
+
+                    let targetColor = 'rgb(219,112,147)';
+
+                    let efficiencyTrace = createPlotlyTrace(xaxis, yaxis, efficiencyColor, 'SEF score');
+                    let efficiencyTargetTrace = createPlotlyTrace(xaxis, targetYaxis, targetColor, 'SEF target');
+
+                    console.log(targetYaxis);
+                    console.log(efficiencyTargetTrace);
+
+                    let plotyEfficiency = [efficiencyTrace, efficiencyTargetTrace];
+                    Plotly.newPlot(efficiencyChart, plotyEfficiency, layout);
+
+
+
+                </script>
+            </div>
+            <div id="hours-container">
+                <script>
+                let hoursData = JSON.parse('{{ hours_data | tojson | safe}}');
+                    const hoursChart = document.getElementById("hours-container");
+                    const hoursColor = 'rgb(219,112,147)';
+                    const hoursLayout = {
+                        width: 550,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        title: {
+                            text: 'Hours Slept Over Time',
+                            font: {
+                                color: '#FFFFFF'
+                            }
+                            },
+                        yaxis: {color: '#FFFFFF',
+                                gridcolor: "rgba(255, 255, 255, 0.3)"},
+                        xaxis: {
+                            color: '#FFFFFF',
+                            gridcolor: "rgba(255, 255, 255, 0.3)",
+                            autorange: true,
+                            rangeselector: {buttons: [
+                                   {count: 1,
+                                    label: '1m',
+                                    step: 'month',
+                                    stepmode: 'backward'
+                                   },
+                                {step: 'all'}
+                                ]}
+                            }
+                        };
+
+                    function createPlotlyTrace(x, y) {
+                        return {
+                            x: x,
+                            y: y,
+                            mode: 'bar',
+                            line: {shape: 'spline',
+                                   color: hoursColor},
+                            type: 'scatter'
+                        }
+                    };
+                    let xaxisHours = [];
+                    let yaxisHours = [];
+
+                    function getAxes(data) {
+                        for(let i of data) {
+                            xaxisHours.push(i.created_date)
+                            yaxisHours.push(i.hours_asleep);
+                        }
+                    };
+
+
+                    getAxes(hoursData);
+                    let hoursTrace = createPlotlyTrace(xaxisHours, yaxisHours);
+
+
+                    Plotly.newPlot(hoursChart, [hoursTrace], hoursLayout);
+                    </script>
+            </div>
+
+        </div>
+        <div id="moods-container">
+            <div id="moods-chart">
+                <script>
+                    const moodChart = {{mood_data | safe}};
+                    const moodChartDiv = document.getElementById("moods-chart");
+                    Plotly.newPlot(moodChartDiv, moodChart, {});
+
+                </script>
+            </div>
+        </div>
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='diary.js')}}"></script>
+{% endblock %}

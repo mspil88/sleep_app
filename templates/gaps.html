@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">How many gaps did you have during the night?</h1></div>
+                <div class="column"><img class="sleep-image-well" src="static/cat_in_bed.png"></div>
+                <div class="column" id="gap-container">
+                    <input id="gap-entry" type="number" min=0 max=99 placeholder="Number of gaps">
+                    <button id="gap-submit">Add Gaps</button>
+                </div>
+
+
+
+
+                <div class="next-back-container" id="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next3-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='gaps.js')}}"></script>
+
+{% endblock %}

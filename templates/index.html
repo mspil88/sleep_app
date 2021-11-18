@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block main %}
+            <div class="sleep-container">
+                <div class="column"><h1 class="sleep-title">When did you go to bed/ wake up?</h1></div>
+                <div class="column"><img class="sleep-image" src="static/sleeping_cat_trans.png"></div>
+                <div class="column-bt">
+
+                    <select name="Went to bed" class="bed-times" id="bed-time">
+                        <option selected disabled>Hour I went to bed</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <select name="Went to bed" class="bed-times" id="bed-minute">
+                        <option selected disabled>Minute I went to bed</option>
+                        <option value="00">00</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                    </select>
+                    <select name="Went to bed" class="bed-times" id="bed-part">
+                        <option selected disabled>am/ pm</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+
+                    </select>
+                </div>
+
+                <div class="column-ot">
+
+                    <select name="Out of bed" class="bed-times" id="out-time">
+                        <option selected disabled>Hour I got out of bed</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <select name="Went to bed" class="bed-times" id="out-minute">
+                        <option selected disabled>Minute I got out of bed</option>
+                        <option value="00">00</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                    </select>
+                    <select name="Went to bed" class="bed-times" id="out-part">
+                        <option selected disabled>am/ pm</option>
+                        <option value="am">am</option>
+                        <option value="pm">pm</option>
+
+                    </select>
+                </div>
+
+                <div class="next-back-container">
+                    <button class="login-btn" id="login-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next1-btn" type="submit">Next</button>
+                </div>
+
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='index.js')}}"></script>
+
+{% endblock %}
+
+<!--<a href="{{url_for('time_taken')}}">-->
