@@ -310,7 +310,7 @@ def diary():
         print("WARNING: Data not found")
 
     #mood_chart_json = create_moods_chart(mood_data)
-    print(mood_data)
+    print(sleep_data)
     try:
         return render_template("diary2.html", sleep_data=sleep_data, wc=ordered_week_commencing, hours_data=hours_data,
                                efficiency_data=efficiency_data, mood_data=mood_data, sef_last=last_week_sef,

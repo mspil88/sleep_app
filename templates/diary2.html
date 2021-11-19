@@ -352,44 +352,85 @@
         </div>
         </div>
 
-        <div class="mood-container">
+        <div class="mood-container" id="mood-chart-container">
+            <div id="thisweek-title">My Next Day Moods
             <script>
                 let moodData = JSON.parse('{{ mood_data | tojson | safe}}');
-                let margin = {top: 10, right: 30, bottom: 40, left: 100},
-                width = 460 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
-                let svg = d3.select("#my_dataviz")
-                             .append("svg")
-                             .attr("width", width + margin.left + margin.right)
-                             .attr("height", height + margin.top + margin.bottom)
-                             .append("g")
-                             .attr("transform",
-                                      "translate(" + margin.left + "," + margin.top + ")");
+                const moodColor = 'rgba(218,165,32, 0.5)';
 
-                //add sort
-<!--                d3.json(moodData);-->
+                const moodColorBorder = getBorderColor(moodColor);
+                console.log(moodColorBorder);
 
-<!--                let x = d3.scaleLinear()-->
-<!--                        .domain([0, 10])-->
-<!--                        .range([0, width]);-->
-<!--                svg.append("g")-->
-<!--                     .attr("transform", "translate(0," + height + ")")-->
-<!--                     .call(d3.axisBottom(x))-->
-<!--                     .selectAll("text")-->
-<!--                     .attr("transform", "translate(-10,0)rotate(-45)")-->
-<!--                     .style("text-anchor", "end");-->
+                function getBorderColor(color) {
+                    sc = color.replace("rgba", "").replace("(", "").replace(")", "").split(",");
+                    ns = 'rgb(';
+                    for(let i = 0; i < sc.length-1; i++) {
+                        if(i < 2) {
+                          ns += sc[i]+",";
+                        }
+                        else {
+                          ns += sc[i]+")";
+                        }
+                    } return ns;
+                }
 
-<!--                var y = d3.scaleBand()-->
-<!--                        .range([ 0, height ])-->
-<!--                         //.domain(data.map(function(d) { return d.Country; }))-->
-<!--                         .padding(1);-->
-<!--                svg.append("g")-->
-<!--                    .call(d3.axisLeft(y))-->
+                function createPlotlyTraceBar(x, y, color) {
+                        return {
+                            x: x,
+                            y: y,
+                            mode: 'markers',
+                            orientation: 'h',
+                            marker: {
+                                color: color,
+                                width: 1,
+                                line: {
+
+                                    color: moodColorBorder,
+                                    width: 2
+                                    }
+                            },
+                            type: 'bar'
+
+                        }
+                    };
+                    let xaxisMood = [];
+                    let yaxisMood = [];
+
+                    function getAxes(data) {
+                        for(let i of data) {
+                            xaxisMood.push(i.mood)
+                            yaxisMood.push(i.count);
+                        }
+                    };
 
 
+                    getAxes(moodData);
+                    console.log(xaxisMood, yaxisMood);
+                    const moodLayout = {
+                        autosize: true,
+                        //height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        showlegend:false,
+                        yaxis: {color: '#FFFFFF',
+                                categoryarray: yaxisMood,
+                                showgrid: false},
+                        xaxis: {
+                            color: '#FFFFFF',
 
-
+                            showgrid: false,
+                            autorange: true,
+                            tickfont: {
+                                size: 10,
+                            },
+                            }
+                        };
+                    let moodTrace = createPlotlyTraceBar(yaxisMood, xaxisMood, moodColor);
+                    const config_mood = {responsive:true};
+                    const moodChart = document.getElementById("mood-chart-container");
+                    Plotly.newPlot(moodChart, [moodTrace], moodLayout, config_mood);
             </script>
+            </div>
         </div>
     </div>
     {{JSGlue.include()}}

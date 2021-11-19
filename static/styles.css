@@ -819,6 +819,7 @@ html.is-leaving .transition-fade {
 .diary-tbl-container {
    grid-column-start:1;
    grid-column-end:5;
+   min-height: 500px;
 }
 
 .mood-container {
