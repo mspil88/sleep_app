@@ -306,18 +306,13 @@ def diary():
     try:
         sleep_data, hours_data, efficiency_data, ordered_week_commencing, mood_data, \
         this_week_sef, last_week_sef = generate_diary_inputs(diary_table)
-    except KeyError:
-        print("WARNING: Data not found")
 
-    #mood_chart_json = create_moods_chart(mood_data)
-    print(sleep_data)
-    try:
         return render_template("diary2.html", sleep_data=sleep_data, wc=ordered_week_commencing, hours_data=hours_data,
                                efficiency_data=efficiency_data, mood_data=mood_data, sef_last=last_week_sef,
                                sef_this=this_week_sef)
-    except Exception:
+    except Exception as e:
+        print(f"WARNING: the following exception has occured {e}")
         return render_template("diary_warn.html")
-
 
 
 @app.route("/add_gaps_2", methods=["GET", "POST"])
