@@ -33,38 +33,38 @@ let defaultInBed = "Hour I went to bed:Minute I went to bedam/ pm";
 let defaultOutBed =  "Hour I got out of bed:Minute I got out of bedam/ pm";
 
 function validateInputs(bedWakeData, defaultInBed, defaultOutBed) {
-    if((bedWakeData.inbed === defaultInbed) || (bedWakeData.outbed === defaultOutbed)) {
+    if((bedWakeData.inbed === defaultInBed) || (bedWakeData.outbed === defaultOutBed)) {
         return true;
     }
 }
 
-next1Btn.addEventListener("click", () => {
-    console.log("next btn clicked");
-
-    let bedWakeData = bedWakeObj(bedTime.value, bedMinute.value, bedPart.value,
-        outTime.value, outMinute.value, outPart.value);
-
-    //console.log(bedTime);
-    //json_data = JSON.stringify(bedWakeData);
-    console.log(bedWakeData);
-    console.log("bed wake data");
-
-    if((bedWakeData.inbed === defaultInBed) || (bedWakeData.outbed === defaultOutBed)) {
-        //alert("invalid inputs");
-        toggleBackground();
-        toggleValidationContainer();
-    } else {
-        console.log(JSON.stringify(bedWakeData));
-        $.ajax({
-            url: Flask.url_for('index', {}),
-    //        url: '/index',
-            type: "POST",
-            data: JSON.stringify(bedWakeData),
-            contentType: "application/json"})
-            .done(function(result) {console.log("success")})
-        location.href = "/time_taken";
-    }
-})
+//next1Btn.addEventListener("click", () => {
+//    console.log("next btn clicked");
+//
+//    let bedWakeData = bedWakeObj(bedTime.value, bedMinute.value, bedPart.value,
+//        outTime.value, outMinute.value, outPart.value);
+//
+//    //console.log(bedTime);
+//    //json_data = JSON.stringify(bedWakeData);
+//    console.log(bedWakeData);
+//    console.log("bed wake data");
+//
+//    if((bedWakeData.inbed === defaultInBed) || (bedWakeData.outbed === defaultOutBed)) {
+//        //alert("invalid inputs");
+//        toggleBackground();
+//        toggleValidationContainer();
+//    } else {
+//        console.log(JSON.stringify(bedWakeData));
+//        $.ajax({
+//            url: Flask.url_for('index', {}),
+//    //        url: '/index',
+//            type: "POST",
+//            data: JSON.stringify(bedWakeData),
+//            contentType: "application/json"})
+//            .done(function(result) {console.log("success")})
+//        location.href = "/time_taken";
+//    }
+//})
 
 allBtns.forEach(btn => {
     btn.addEventListener("click", event => {
@@ -72,8 +72,12 @@ allBtns.forEach(btn => {
         let bedWakeData = bedWakeObj(bedTime.value, bedMinute.value, bedPart.value,
                                         outTime.value, outMinute.value, outPart.value);
 
-        if((action == "next1-btn") && validateInputs(bedWakeData, defaultInBed, defaultOutBed)) {
-            toggleBackGround();
+        let validInputs = validateInputs(bedWakeData, defaultInBed, defaultOutBed);
+        console.log(validInputs);
+
+        if((action == "next1-btn") && (validInputs)) {
+            console.log("next clicked");
+            toggleBackground();
             toggleValidationContainer();
 
         } else if((action == "next1-btn")) {

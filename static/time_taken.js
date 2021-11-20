@@ -1,12 +1,20 @@
-var next2Btn = document.getElementById("next2-btn");
-let backBtn = document.getElementById("back-btn");
-var timeToSleep = document.getElementById("times-to-fall");
-var timeGetOut = document.getElementById("get-out-bed");
+const next2Btn = document.getElementById("next2-btn");
+const backBtn = document.getElementById("back-btn");
+const timeToSleep = document.getElementById("times-to-fall");
+const timeGetOut = document.getElementById("get-out-bed");
+const inputBackground = document.getElementById("input-background");
+const validationContainer = document.getElementById("gap-input-add");
 
-let defaultTimeToSleep = "Time to fall asleep";
-let defaultTimeGetOut = "Time to get out of bed";
+const defaultTimeToSleep = "Time to fall asleep";
+const defaultTimeGetOut = "Time to get out of bed";
 
-console.log("test time_taken.js");
+function toggleBackground() {
+    inputBackground.classList.toggle('visible');
+}
+
+function toggleValidationContainer() {
+    validationContainer.classList.toggle('visible');
+}
 
 function timeInOut(tts, tgo) {
     return {'time_to_sleep': tts,
@@ -14,14 +22,29 @@ function timeInOut(tts, tgo) {
     }
 }
 
+function validateInputs(timeToSleepData, defaultTimeToSleep, defaultTimeGetOut) {
+    if((timeToSleepData.time_to_sleep === defaultTimeToSleep) || (timeToSleepData.time_get_out === defaultTimeGetOut)) {
+        return true;
+    }
+}
+
+inputBackground.addEventListener("click", ()=> {
+    toggleBackground();
+    toggleValidationContainer();
+})
+
 next2Btn.addEventListener("click", () => {
     console.log("next btn clicked");
 
     let timeData = timeInOut(timeToSleep.value, timeGetOut.value);
 
-    if((timeData.time_to_sleep === defaultTimeToSleep) || (timeData.time_get_out === defaultTimeGetOut)) {
-        console.log("Invalid inputs")
+    if(validateInputs(timeData, defaultTimeToSleep, defaultTimeGetOut)) {
+        console.log("Invalid inputs");
+        console.log(timeData);
+        toggleBackground();
+        toggleValidationContainer();
     } else {
+
         $.ajax({
             url: Flask.url_for('time_taken', {}),
     //        url: '/index',
@@ -30,6 +53,7 @@ next2Btn.addEventListener("click", () => {
             contentType: "application/json"})
             .done(function(result) {console.log("success")})
         location.href = "/gaps";}
+
 })
 
 backBtn.addEventListener("click", () => {

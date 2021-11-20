@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
 
 {% block main %}
+            <div id="input-background"></div>
+                <div class="validation-container" id="validation-container">
+                    <div class="gap-input-container" id="gap-input-add">
+                        <p>Invalid Inputs Found</p>
+                        <p>Please check that you have correctly specified:</p>
+                        <ul id="validation-list">
+                            <li>The time it took for you to fall asleep</li>
+                            <li>The time it took for you to get out of bed</li>
+
+                        </ul>
+                    </div>
+                </div>
             <div class="sleep-container">
                 <div class="column"><h1 class="sleep-title">How long did it take you to...</h1></div>
                 <div class="column"><img class="sleep-image-time" src="static/awake_cat_fin.png"></div>

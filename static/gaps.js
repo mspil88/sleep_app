@@ -9,16 +9,22 @@ gapSubmit.addEventListener("click", () => {
     gapNumber = numberOfGaps;
     console.log(numberOfGaps);
     if((numberOfGaps === '')) {
-        return
+        sendData(0);
     } else {
+        console.log(numberOfGaps);
         sendData(numberOfGaps);
     }
 })
 
 nextBtn3.addEventListener("click", () => {
     if(gapNumber == 0) {
+        location.href = "/feel";}
+    else if (gapNumber === '') {
+        sendData(0);
         location.href = "/feel";
-    } else {
+    }
+    else {
+
         location.href = "/add_gaps";
     }
 })
