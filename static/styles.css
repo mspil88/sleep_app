@@ -816,6 +816,7 @@ html.is-leaving .transition-fade {
 
 }
 
+
 .diary-tbl-container {
    grid-column-start:1;
    grid-column-end:5;
@@ -829,4 +830,8 @@ html.is-leaving .transition-fade {
 
 .hold-all {
     margin: 20px 20px 20px 20px;
+}
+
+#back-btn-1:hover, #next-btn-fin:hover {
+    background-color: palevioletred;
 }
