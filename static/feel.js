@@ -4,7 +4,6 @@ const moveBtnContainer = document.getElementById("next-back-container");
 
 console.log("feel module");
 
-
 function countButtons(container) {
     let numButtons = 0;
     for(let i = 0; i < container.length; i++) {

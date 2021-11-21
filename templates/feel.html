@@ -14,9 +14,27 @@
 <!--                    <button class="mood-btn" id="alert-btn" name="alert">Alert</button>-->
 <!--                    <button class="mood-btn" id="groggy-btn" name="groggy">Groggy</button>-->
 <!--                    <button class="mood-btn" id="add-btn">+Add</button>-->
-                        {% for mood in moods %}
-                        <button class="mood-btn" id = "{{mood}}-btn" name = {{mood}}>{{mood}}</button>
-                        {% endfor %}
+<!--                        {% for mood in moods %}-->
+<!--                        <button class="mood-btn" id = "{{mood}}-btn" name = {{mood}}>{{mood}}</button>-->
+<!--                        {% endfor %}-->
+                        <script>
+                            let moods = JSON.parse('{{moods | tojson | safe}}');
+                            let holdBtns = document.getElementById('hold-btns');
+
+                            function renderButtons(moods) {
+                                for(let mood of moods) {
+                                    let btn = document.createElement("button");
+                                    btn.classList.add("mood-btn");
+                                    btn.setAttribute('id',`${mood}-btn`);
+                                    btn.setAttribute('name', mood);
+                                    btn.innerHTML = mood;
+                                    holdBtns.appendChild(btn);
+                                }
+                            }
+
+                            renderButtons(moods);
+
+                        </script>
                     </div>
 
 
