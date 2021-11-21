@@ -77,12 +77,15 @@ moodContainer.addEventListener('click', (event) => {
                 moodContainer.insertBefore(newButton, addButton);
 
                 }
-        } else if(action.type != null) {
+        } else if((action.type != null) && (!moodSet.includes(action.name))) {
             moodSet.push(action.name);
             console.log(action.type);
             action.style.background = "palevioletred";
             console.log(moodSet.unique());
 
+        } else if((action.type != null) && (moodSet.includes(action.name))) {
+            moodSet = moodSet.filter(mood => mood != action.name)
+            action.style.background = "white";
         }
     }
 })
