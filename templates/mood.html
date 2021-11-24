@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div class="sleep-container">
+        <div class="column"><h2 class="question-header" id="question-header">Question 1 of 18</h2></div>
+        <div class="column"><h1 class="mood-title" id="mood-title">How often have you been bothered by feeling down,
+            depressed or hopeless?</h1></div>
+            <div class="question-container">
+            <label class="container">Not at all
+              <input class = "mood-checkbox" type="radio" checked="checked" name="radio">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Several days
+              <input class = "mood-checkbox"  type="radio" name="radio">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">More than half the days
+              <input id = "2" class = "mood-checkbox"  type="radio" name="radio">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Nearly every day
+              <input  class = "mood-checkbox" type="radio" name="radio">
+              <span class="checkmark"></span>
+            </label>
+            </div>
+
+        <div class="next-back-container" id="next-back-container">
+                    <button class="login-btn" id="back-btn" type="submit">Back</button>
+                    <button class="login-btn" id="next-q1-btn" type="submit">Next</button>
+                </div>
+
+            </div>
+
+            {{JSGlue.include()}}
+            <script src="{{url_for('static', filename='mood.js')}}"></script>
+
+{% endblock %}

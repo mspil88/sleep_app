@@ -338,3 +338,10 @@ def diary2():
     else:
         return render_template("diary2.html")
 
+
+@app.route("/mood", methods=["GET", "POST"])
+def mood():
+    if request.method == "GET":
+        return render_template("mood.html")
+    else:
+        return render_template("mood.html")

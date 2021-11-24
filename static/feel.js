@@ -2,7 +2,7 @@ var moodBtns = document.querySelectorAll("button");
 const moodContainer = document.getElementById("hold-btns");
 const moveBtnContainer = document.getElementById("next-back-container");
 
-console.log("feel module");
+let moodsToRender = moods;
 
 function countButtons(container) {
     let numButtons = 0;
@@ -47,6 +47,15 @@ function buttonStruct(buttonName) {
     return {buttonName: buttonName + "-btn"}
 }
 
+function clearButtons(parent) {
+    for(let i of parent.children) {
+        if((i.name !== undefined )) {
+            if(!i.name.includes("add")) {
+                i.remove();}
+        }
+    }
+}
+
 Array.prototype.unique = function() {
     return [...new Set(this)];
 }
@@ -86,6 +95,18 @@ moodContainer.addEventListener('click', (event) => {
             moodSet = moodSet.filter(mood => mood != action.name)
             action.style.background = "white";
         }
+    }
+})
+// need to fully replace in render function
+moodContainer.addEventListener("dblclick", (event) => {
+    let action = event.target;
+    console.log("check");
+    if((action.id.includes("btn") && ((!action.name.includes("back")) || (!action.name.includes("next"))))) {
+        console.log("check2");
+        moodsToRender = moodsToRender.filter(mood => mood != action.name)
+        console.log(moodsToRender);
+        renderButtons(moodsToRender);
+        clearButtons(moodContainer);
     }
 })
 
