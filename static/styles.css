@@ -962,3 +962,7 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   /* style rules */
 }
+
+.last-week-container:hover, .this-week-container:hover, .sef-container:hover, .hours-container:hover, .diary-tbl-container:hover, .mood-container:hover   {
+    box-shadow: 0 0 0  2px goldenrod;
+}
