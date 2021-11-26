@@ -932,3 +932,33 @@ html.is-leaving .transition-fade {
 .question-container {
     padding-bottom: 60px;
 }
+
+#depression-score {
+    color: white;
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+#depress-score-val {
+    font-size: 25px;
+}
+
+progress {
+  border-radius: 7px;
+  margin-left: 30px;
+  height: 50px;
+  width: 400px;
+  box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 );
+}
+progress::-webkit-progress-bar {
+  background-color: white;
+  border-radius: 7px;
+}
+progress::-webkit-progress-value {
+  background-color: goldenrod;
+  border-radius: 7px;
+  box-shadow: 1px 1px 5px 3px rgba( 0, 0, 0, 0.8 );
+}
+progress::-moz-progress-bar {
+  /* style rules */
+}

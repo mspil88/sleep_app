@@ -3,10 +3,10 @@ let allBtns = document.querySelectorAll("button");
 let moodTitle = document.getElementById("mood-title");
 const nextBtn = document.getElementById("next-q1-btn");
 const questionContainer = document.getElementById("question-container");
+const questions = document.getElementById("questions");
 
 dataContainer = [];
 
-//add question number input
 function moodSurveyResponses(questionNumber, questionResponse, answer) {
     return {'questionNumber': questionNumber, 'questionResponse': questionResponse,
             'answer': answer, 'score': getScore(questionResponse)}
@@ -80,6 +80,17 @@ const questionsArray = [
                         "Have you been bothered by worrying about any of the following?",
                       ]
 
+const e = document.createElement("div")
+e.id = "results-container";
+const p = document.createElement("p")
+p.innerHTML = "Your depression score is";
+p.id = "depression-score"
+const s = document.createElement("span");
+s.id = "depression-score-val"
+const prog = document.createElement("progress");
+prog.id = "depression-prog";
+prog.max = 24;
+
 allBtns.forEach(btn => {
 
     btn.addEventListener("click", (event)=> {
@@ -107,7 +118,14 @@ allBtns.forEach(btn => {
             }
             if(currentIdx === 14) {
                 questionContainer.remove();
+                moodTitle.remove();
+                questions.append(e);
+                questions.append(p);
+                p.append(s);
+                questions.append(prog);
                 const [depressionScore, anxietyScore] = sumScores(dataContainer);
+                s.innerHTML= depressionScore;
+                prog.value = depressionScore;
                 console.log(depressionScore);
                 console.log(anxietyScore);
             }
