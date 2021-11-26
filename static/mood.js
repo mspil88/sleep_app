@@ -35,6 +35,15 @@ function pushQuestionData(questionNumber) {
         }};
    }
 
+function uncheckOptions(questionNumber){
+    for(let i of questionContainer.childNodes) {
+        if(i.tagName == "LABEL") {
+            i.childNodes[1].checked = false;
+        }
+    }
+
+}
+
 function sumScores(dataContainer) {
     depressionScore = 0;
     anxietyScore = 0;
@@ -81,12 +90,15 @@ allBtns.forEach(btn => {
 
         if((action.includes("next")) && (currentIdx < questionArrayLen)) {
             console.log(`Current index ${currentIdx}`);
+
+            //split out data catch and push? Then do not move if empty
             pushQuestionData(currentIdx);
             console.log(dataContainer);
             let nextQuestionValue = questionArray[currentIdx+1];
             let nextQuestion = questionsArray[currentIdx+1];
             questionHeader.innerHTML = nextQuestionValue;
             moodTitle.innerHTML = nextQuestion;
+            uncheckOptions(currentIdx);
             let checkedValue = document.querySelector(".mood-checkbox");
             if(currentIdx === 4 || currentIdx === 5 || currentIdx === 6) {
                 moodTitle.style.fontSize = "20px";
