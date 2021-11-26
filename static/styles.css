@@ -933,13 +933,13 @@ html.is-leaving .transition-fade {
     padding-bottom: 60px;
 }
 
-#depression-score {
+#depression-score, #anxiety-score {
     color: white;
     padding-left: 30px;
     font-size: 20px;
 }
 
-#depress-score-val {
+#depression-score-val, #anxiety-score-val {
     font-size: 25px;
 }
 

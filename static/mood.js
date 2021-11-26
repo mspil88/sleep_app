@@ -80,16 +80,24 @@ const questionsArray = [
                         "Have you been bothered by worrying about any of the following?",
                       ]
 
-const e = document.createElement("div")
-e.id = "results-container";
-const p = document.createElement("p")
-p.innerHTML = "Your depression score is";
-p.id = "depression-score"
-const s = document.createElement("span");
-s.id = "depression-score-val"
-const prog = document.createElement("progress");
-prog.id = "depression-prog";
-prog.max = 24;
+function createProgBar(parent, type, value) {
+    const e = document.createElement("div")
+    e.id = "results-container";
+    const p = document.createElement("p")
+    p.innerHTML = `Your ${type} score is`;
+    p.id = `${type}-score`;
+    const s = document.createElement("span");
+    s.id = `${type}-score-val`;
+    const prog = document.createElement("progress");
+    prog.id = `${type}-prog`;
+    prog.max = 24;
+    parent.append(e);
+    parent.append(p);
+    p.append(s);
+    parent.append(prog);
+    s.innerHTML= value;
+    prog.value = value;
+}
 
 allBtns.forEach(btn => {
 
@@ -119,13 +127,10 @@ allBtns.forEach(btn => {
             if(currentIdx === 14) {
                 questionContainer.remove();
                 moodTitle.remove();
-                questions.append(e);
-                questions.append(p);
-                p.append(s);
-                questions.append(prog);
+
                 const [depressionScore, anxietyScore] = sumScores(dataContainer);
-                s.innerHTML= depressionScore;
-                prog.value = depressionScore;
+                createProgBar(questions, "depression", depressionScore);
+                createProgBar(questions, "anxiety", anxietyScore);
                 console.log(depressionScore);
                 console.log(anxietyScore);
             }
